@@ -5,17 +5,26 @@ const WA = "233541431179";
 const waLink = (msg: string) =>
   `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
 
-const PHOTOS: { src: string; title: string; sub: string; cls?: string }[] = [
-  { src: "/photos/pink-living.jpg", title: "The Pink Lounge", sub: "Layered drapes & valance — residential", cls: "tall" },
-  { src: "/photos/blue-satin.jpg", title: "Blue Satin Duo", sub: "Tieback styling — residential", cls: "tall" },
-  { src: "/photos/peach-restaurant.jpg", title: "Peach Dining Hall", sub: "Full hall dressing — restaurant", cls: "wide" },
-  { src: "/photos/gray-drapes.jpg", title: "Grey & Sheer", sub: "Double-layer drape — residential", cls: "wide" },
-  { src: "/photos/restaurant-swag.jpg", title: "Swagged Bay", sub: "Swag valance — restaurant", cls: "wide" },
-  { src: "/photos/beige-rod.jpg", title: "Beige Classic", sub: "Rod set & sheers — residential", cls: "tall" },
-  { src: "/photos/sheer-valance.jpg", title: "Sheer Romance", sub: "Valance & sheer — residential", cls: "tall" },
+type Cat = "curtains" | "blinds";
+const PHOTOS: { src: string; title: string; sub: string; cat: Cat; cls?: string }[] = [
+  { src: "/photos/pink-living.jpg", title: "The Pink Lounge", sub: "Layered drapes & valance — residential", cat: "curtains", cls: "tall" },
+  { src: "/photos/blue-satin.jpg", title: "Blue Satin Duo", sub: "Tieback styling — residential", cat: "curtains", cls: "tall" },
+  { src: "/photos/chandelier-hall.jpg", title: "The Chandelier Hall", sub: "Sheers under camel drapes — showpiece", cat: "curtains", cls: "wide" },
+  { src: "/photos/gray-bedroom.jpg", title: "Grey Retreat", sub: "Blackout drapes & sheer — bedroom", cat: "curtains", cls: "tall" },
+  { src: "/photos/peach-restaurant.jpg", title: "Peach Dining Hall", sub: "Full hall dressing — restaurant", cat: "curtains", cls: "wide" },
+  { src: "/photos/gray-drapes.jpg", title: "Grey & Sheer", sub: "Double-layer drape — residential", cat: "curtains", cls: "tall" },
+  { src: "/photos/restaurant-swag.jpg", title: "Swagged Bay", sub: "Swag valance — restaurant", cat: "curtains", cls: "wide" },
+  { src: "/photos/beige-rod.jpg", title: "Beige Classic", sub: "Rod set & sheers — residential", cat: "curtains" },
+  { src: "/photos/sheer-valance.jpg", title: "Sheer Romance", sub: "Valance & sheer — residential", cat: "curtains", cls: "tall" },
+  { src: "/photos/wood-blinds.jpg", title: "Walnut Woods", sub: "Timber venetians — residential", cat: "blinds", cls: "tall" },
+  { src: "/photos/stripe-blinds.jpg", title: "Monochrome Stripe", sub: "Zebra blinds — office", cat: "blinds", cls: "tall" },
+  { src: "/photos/rainbow-blinds.jpg", title: "The Rainbow Kitchen", sub: "Colour-run slats — kitchen", cat: "blinds" },
+  { src: "/photos/office-blinds.jpg", title: "The Study", sub: "Faux-wood blinds — office", cat: "blinds", cls: "tall" },
+  { src: "/photos/roller-blind.jpg", title: "Taupe Roller", sub: "Roller blind — residential", cat: "blinds", cls: "tall" },
 ];
 
 export default function Home() {
+  const [filter, setFilter] = useState<"all" | Cat>("all");
   const ioRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
@@ -23,10 +32,10 @@ export default function Home() {
       (es) => es.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
       { threshold: 0.12 }
     );
-    document.querySelectorAll(".rise").forEach((el) => io.observe(el));
+    document.querySelectorAll(".rise:not(.in)").forEach((el) => io.observe(el));
     ioRef.current = io;
     return () => io.disconnect();
-  }, []);
+  }, [filter]);
 
   return (
     <main>
@@ -97,16 +106,33 @@ export default function Home() {
               Every photo, our own work.
             </p>
           </div>
+          <div className="chips rise" role="tablist" aria-label="Filter gallery">
+            {(["all", "curtains", "blinds"] as const).map((c) => (
+              <button
+                key={c}
+                className={`chip ${filter === c ? "on" : ""}`}
+                onClick={() => setFilter(c)}
+                role="tab"
+                aria-selected={filter === c}
+              >
+                {c === "all" ? "All Work" : c === "curtains" ? "Curtains" : "Blinds"}
+              </button>
+            ))}
+          </div>
           <div className="gallery">
-            {PHOTOS.map((p, i) => (
-              <figure key={p.src} className={`gcard rise ${p.cls || ""}`} style={{ transitionDelay: `${(i % 3) * 90}ms` }}>
+            {PHOTOS.filter((p) => filter === "all" || p.cat === filter).map((p, i) => (
+              <figure
+                key={p.src}
+                className={`gcard rise ${p.cls || ""}`}
+                style={{ transitionDelay: `${(i % 3) * 90}ms` }}
+              >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={p.src} alt={`${p.title} — ${p.sub}`} loading="lazy" />
                 <figcaption className="cap">
                   <b>{p.title}</b>
                   {p.sub}
                 </figcaption>
-                </figure>
+              </figure>
             ))}
           </div>
         </div>
