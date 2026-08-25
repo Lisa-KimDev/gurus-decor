@@ -222,3 +222,93 @@ footer .flogo { font-family: var(--font-display), serif; font-size: 1.3rem; colo
 footer .flogo em { color: var(--gold-soft); font-style: italic; }
 footer a { color: rgba(247, 241, 230, 0.7); text-decoration: none; }
 footer a:hover { color: var(--gold-soft); }
+
+/* ── floating WhatsApp FAB ── */
+.wa-fab {
+  position: fixed; right: 22px; bottom: 22px; z-index: 90;
+  width: 58px; height: 58px; border-radius: 50%;
+  background: #25d366; color: #fff;
+  display: grid; place-items: center;
+  box-shadow: 0 14px 30px -10px rgba(37, 211, 102, 0.65);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.wa-fab:hover { transform: scale(1.12); }
+.wa-fab .wa-ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid #25d366; opacity: 0;
+  animation: waPulse 2.4s ease-out infinite;
+}
+.wa-fab .wa-ring.d2 { animation-delay: 1.2s; }
+@keyframes waPulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  70% { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+.wa-fab .wa-tip {
+  position: absolute; right: 70px; white-space: nowrap;
+  background: var(--ink); color: var(--cream);
+  font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 8px 14px; border-radius: 8px;
+  opacity: 0; transform: translateX(8px); pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.wa-fab:hover .wa-tip { opacity: 1; transform: none; }
+
+/* ── richer motion ── */
+@keyframes kenburns {
+  0% { transform: scale(1) translateY(0); }
+  100% { transform: scale(1.12) translateY(-2%); }
+}
+.hero-art img { animation: kenburns 14s ease-in-out infinite alternate; }
+
+header.hero .badge { animation: badgeIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) 1s both; }
+@keyframes badgeIn {
+  from { opacity: 0; transform: translateY(24px) rotate(-4deg); }
+  to { opacity: 1; transform: none; }
+}
+
+.sec-head h2 { position: relative; display: inline-block; }
+.sec-head h2::after {
+  content: ""; position: absolute; left: 0; bottom: -10px;
+  height: 2px; width: 64px; background: var(--gold);
+  transform-origin: left; transform: scaleX(0);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
+}
+.sec-head.in h2::after, .sec-head.rise.in h2::after { transform: scaleX(1); }
+
+.gcard { overflow: hidden; }
+.gcard img { transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+.gcard .cap { transform: translateY(8px); opacity: 0.92; transition: transform 0.5s ease, opacity 0.5s ease; }
+.gcard:hover .cap { transform: none; opacity: 1; }
+.gcard::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%);
+  transform: translateX(-120%); transition: transform 0.9s ease;
+}
+.gcard:hover::after { transform: translateX(120%); }
+
+.btn.gold { box-shadow: 0 12px 26px -12px rgba(185, 134, 60, 0.8); }
+.btn.gold:hover { box-shadow: 0 18px 34px -14px rgba(185, 134, 60, 0.95); }
+.btn.ghost { position: relative; overflow: hidden; }
+.btn.ghost::after {
+  content: ""; position: absolute; inset: 0; background: var(--gold);
+  transform: translateY(101%); transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); z-index: -1;
+}
+.btn.ghost:hover { color: #fff; border-color: var(--gold); }
+.btn.ghost:hover::after { transform: none; }
+
+.strip .track { animation: slide 22s linear infinite; }
+
+.price-band.rise.in { animation: bandGlow 3.2s ease-in-out 1s both; }
+@keyframes bandGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(185, 134, 60, 0); }
+  50% { box-shadow: 0 0 90px 6px rgba(185, 134, 60, 0.35); }
+}
+
+.step { transition: transform 0.35s ease; }
+.step:hover { transform: translateY(-4px); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .rise { opacity: 1; transform: none; }
+}

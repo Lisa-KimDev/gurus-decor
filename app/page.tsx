@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const WA = "233541431179";
 const waLink = (msg: string) =>
@@ -253,6 +253,22 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* floating WhatsApp */}
+      <a
+        className="wa-fab"
+        href={waLink("Hello Guru's Decor! I saw your website and I'd like a quote.")}
+        aria-label="Chat on WhatsApp"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span className="wa-ring" aria-hidden />
+        <span className="wa-ring d2" aria-hidden />
+        <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden>
+          <path fill="currentColor" d="M16 3a13 13 0 0 0-11 19.9L3 29l6.3-1.9A13 13 0 1 0 16 3Zm0 2a11 11 0 1 1-5.6 20.5l-.4-.2-3.7 1.1 1.1-3.6-.2-.4A11 11 0 0 1 16 5Zm-4.5 5.8c-.2 0-.5 0-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.2.2 1.8 2.9 4.5 3.9 2.2.9 2.7.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3l-2-.9c-.3-.1-.5-.2-.7.1l-1 1.2c-.2.2-.3.2-.6.1a6.6 6.6 0 0 1-2-1.2 7.3 7.3 0 0 1-1.3-1.7c-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.4-.5-.6-.5h-.1Z"/>
+        </svg>
+        <span className="wa-tip">Chat with us</span>
+      </a>
     </main>
   );
 }
