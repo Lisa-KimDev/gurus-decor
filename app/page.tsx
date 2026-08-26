@@ -5,8 +5,17 @@ const WA = "233541431179";
 const waLink = (msg: string) =>
   `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
 
-type Cat = "curtains" | "blinds";
-const PHOTOS: { src: string; title: string; sub: string; cat: Cat; cls?: string }[] = [
+type Cat = "curtains" | "blinds" | "videos";
+type Item = {
+  src: string;
+  title: string;
+  sub: string;
+  cat: Cat;
+  cls?: string;
+  video?: boolean;
+  poster?: string;
+};
+const PHOTOS: Item[] = [
   { src: "/photos/pink-living.jpg", title: "The Pink Lounge", sub: "Layered drapes & valance — residential", cat: "curtains", cls: "tall" },
   { src: "/photos/blue-satin.jpg", title: "Blue Satin Duo", sub: "Tieback styling — residential", cat: "curtains", cls: "tall" },
   { src: "/photos/chandelier-hall.jpg", title: "The Chandelier Hall", sub: "Sheers under camel drapes — showpiece", cat: "curtains", cls: "wide" },
@@ -21,6 +30,8 @@ const PHOTOS: { src: string; title: string; sub: string; cat: Cat; cls?: string 
   { src: "/photos/rainbow-blinds.jpg", title: "The Rainbow Kitchen", sub: "Colour-run slats — kitchen", cat: "blinds" },
   { src: "/photos/office-blinds.jpg", title: "The Study", sub: "Faux-wood blinds — office", cat: "blinds", cls: "tall" },
   { src: "/photos/roller-blind.jpg", title: "Taupe Roller", sub: "Roller blind — residential", cat: "blinds", cls: "tall" },
+  { src: "/photos/media/video-blue-duo.mp4", poster: "/photos/media/poster-blue-duo.jpg", title: "Blue Satin Duo — The Film", sub: "Motion walkthrough — residential", cat: "videos", cls: "tall", video: true },
+  { src: "/photos/media/video-teal-tieback.mp4", poster: "/photos/media/poster-teal-tieback.jpg", title: "Teal Tiebacks in Motion", sub: "Sheer + drape layers — residential", cat: "videos", cls: "tall", video: true },
 ];
 
 export default function Home() {
@@ -163,11 +174,11 @@ export default function Home() {
             <p>
               Real installations from the Guru&rsquo;s Decor book — living
               rooms, bedrooms and dining halls we&rsquo;ve dressed since 2016.
-              Every photo, our own work.
+              Every photo and film, our own work.
             </p>
           </div>
           <div className="chips rise" role="tablist" aria-label="Filter gallery">
-            {(["all", "curtains", "blinds"] as const).map((c) => (
+            {(["all", "curtains", "blinds", "videos"] as const).map((c) => (
               <button
                 key={c}
                 className={`chip ${filter === c ? "on" : ""}`}
@@ -175,7 +186,7 @@ export default function Home() {
                 role="tab"
                 aria-selected={filter === c}
               >
-                {c === "all" ? "All Work" : c === "curtains" ? "Curtains" : "Blinds"}
+                {c === "all" ? "All Work" : c === "curtains" ? "Curtains" : c === "blinds" ? "Blinds" : "Videos"}
               </button>
             ))}
           </div>
@@ -186,8 +197,19 @@ export default function Home() {
                 className={`gcard rise ${p.cls || ""}`}
                 style={{ transitionDelay: `${(i % 3) * 90}ms` }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={p.src} alt={`${p.title} — ${p.sub}`} loading="lazy" />
+                {p.video ? (
+                  <video
+                    src={p.src}
+                    poster={p.poster}
+                    controls
+                    playsInline
+                    preload="none"
+                    aria-label={`${p.title} — ${p.sub}`}
+                  />
+                ) : (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img src={p.src} alt={`${p.title} — ${p.sub}`} loading="lazy" />
+                )}
                 <figcaption className="cap">
                   <b>{p.title}</b>
                   {p.sub}
