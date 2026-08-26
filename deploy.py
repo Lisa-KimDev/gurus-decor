@@ -26,6 +26,7 @@ print(f"uploading {len(rel_files)} files")
 
 payload = {
     "name": "gurus-decor",
+    "target": "production",
     "files": [
         {
             "file": f,
