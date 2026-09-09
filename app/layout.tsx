@@ -15,7 +15,7 @@ const body = Jost({
   variable: "--font-body",
 });
 
-const SITE_URL = "https://gurusdecorgh.com";
+const SITE_URL = "https://www.gurusdecorgh.com";
 const TITLE = "Curtains, Blinds & Window Fashion in Ghana | Guru's Decor Accra";
 const DESCRIPTION =
   "Guru's Decor supplies and installs curtains, blinds, rods and tracks across Ghana — homes, offices and restaurants. Ready-made pairs from GH₵250, free measurement, same-day WhatsApp quotes. Est. 2016.";

@@ -21,4 +21,4 @@ Allow: /
 User-agent: meta-externalagent
 Allow: /
 
-Sitemap: https://gurusdecorgh.com/sitemap.xml
+Sitemap: https://www.gurusdecorgh.com/sitemap.xml

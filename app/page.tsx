@@ -14,6 +14,7 @@ type Item = {
   cls?: string;
   video?: boolean;
   poster?: string;
+  captions?: string;
 };
 const PHOTOS: Item[] = [
   { src: "/photos/pink-living.jpg", title: "The Pink Lounge", sub: "Layered drapes & valance — residential", cat: "curtains", cls: "tall" },
@@ -30,8 +31,8 @@ const PHOTOS: Item[] = [
   { src: "/photos/rainbow-blinds.jpg", title: "The Rainbow Kitchen", sub: "Colour-run slats — kitchen", cat: "blinds" },
   { src: "/photos/office-blinds.jpg", title: "The Study", sub: "Faux-wood blinds — office", cat: "blinds", cls: "tall" },
   { src: "/photos/roller-blind.jpg", title: "Taupe Roller", sub: "Roller blind — residential", cat: "blinds", cls: "tall" },
-  { src: "/photos/media/video-blue-duo.mp4", poster: "/photos/media/poster-blue-duo.jpg", title: "Blue Satin Duo — The Film", sub: "Motion walkthrough — residential", cat: "videos", cls: "tall", video: true },
-  { src: "/photos/media/video-teal-tieback.mp4", poster: "/photos/media/poster-teal-tieback.jpg", title: "Teal Tiebacks in Motion", sub: "Sheer + drape layers — residential", cat: "videos", cls: "tall", video: true },
+  { src: "/photos/media/video-blue-duo-cap.mp4", poster: "/photos/media/poster-blue-duo.jpg", captions: "/photos/media/cap.vtt", title: "Blue Satin Duo — The Film", sub: "Motion walkthrough — residential", cat: "videos", cls: "tall", video: true },
+  { src: "/photos/media/video-teal-tieback-cap.mp4", poster: "/photos/media/poster-teal-tieback.jpg", captions: "/photos/media/cap.vtt", title: "Teal Tiebacks in Motion", sub: "Sheer + drape layers — residential", cat: "videos", cls: "tall", video: true },
 ];
 
 export default function Home() {
@@ -85,15 +86,15 @@ export default function Home() {
             "@graph": [
               {
                 "@type": "LocalBusiness",
-                "@id": "https://gurusdecorgh.com/#org",
+                "@id": "https://www.gurusdecorgh.com/#org",
                 name: "Guru's Decor",
                 description:
                   "Family-run window-fashion studio supplying and installing curtains, blinds, rods and tracks across Ghana since 2016.",
-                url: "https://gurusdecorgh.com/",
+                url: "https://www.gurusdecorgh.com/",
                 telephone: "+233541431179",
                 foundingDate: "2016",
                 priceRange: "GH₵250 - GH₵300+",
-                image: "https://gurusdecorgh.com/photos/blue-satin.jpg",
+                image: "https://www.gurusdecorgh.com/photos/blue-satin.jpg",
                 address: {
                   "@type": "PostalAddress",
                   addressLocality: "Accra",
@@ -110,22 +111,22 @@ export default function Home() {
               },
               {
                 "@type": "WebSite",
-                "@id": "https://gurusdecorgh.com/#site",
-                url: "https://gurusdecorgh.com/",
+                "@id": "https://www.gurusdecorgh.com/#site",
+                url: "https://www.gurusdecorgh.com/",
                 name: "Guru's Decor",
-                publisher: { "@id": "https://gurusdecorgh.com/#org" },
+                publisher: { "@id": "https://www.gurusdecorgh.com/#org" },
               },
               {
                 "@type": "WebPage",
-                "@id": "https://gurusdecorgh.com/#webpage",
-                url: "https://gurusdecorgh.com/",
+                "@id": "https://www.gurusdecorgh.com/#webpage",
+                url: "https://www.gurusdecorgh.com/",
                 name: "Curtains, Blinds & Window Fashion in Ghana | Guru's Decor Accra",
-                isPartOf: { "@id": "https://gurusdecorgh.com/#site" },
-                about: { "@id": "https://gurusdecorgh.com/#org" },
+                isPartOf: { "@id": "https://www.gurusdecorgh.com/#site" },
+                about: { "@id": "https://www.gurusdecorgh.com/#org" },
               },
               {
                 "@type": "FAQPage",
-                "@id": "https://gurusdecorgh.com/#faq",
+                "@id": "https://www.gurusdecorgh.com/#faq",
                 mainEntity: [
                   {
                     "@type": "Question",
@@ -249,13 +250,16 @@ export default function Home() {
         <div className="hero-art rise" style={{ transitionDelay: "240ms" }}>
           <div className="frame">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/photos/blue-satin.jpg"
-              alt="Blue satin curtains with tiebacks installed by Guru's Decor"
-              width={720}
-              height={742}
-              fetchPriority="high"
-            />
+            <picture>
+              <source srcSet="/photos/blue-satin.webp" type="image/webp" />
+              <img
+                src="/photos/blue-satin.jpg"
+                alt="Blue satin curtains with tiebacks installed by Guru's Decor"
+                width={720}
+                height={742}
+                fetchPriority="high"
+              />
+            </picture>
           </div>
  <div className="badge">
             <b>GH₵250+</b>
@@ -315,10 +319,15 @@ export default function Home() {
                     playsInline
                     preload="none"
                     aria-label={`${p.title} — ${p.sub}`}
-                  />
+                  >
+                    <track kind="captions" label="No dialogue" src={p.captions} default />
+                  </video>
                 ) : (
                   /* eslint-disable-next-line @next/next/no-img-element */
-                  <img src={p.src} alt={`${p.title} — ${p.sub}`} loading="lazy" />
+                  <picture>
+                    <source srcSet={p.src.replace(".jpg", ".webp")} type="image/webp" />
+                    <img src={p.src} alt={`${p.title} — ${p.sub}`} loading="lazy" />
+                  </picture>
                 )}
                 <figcaption className="cap">
                   <b>{p.title}</b>
@@ -407,7 +416,10 @@ export default function Home() {
         <div className="wrap about">
           <div className="imgbox rise">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/photos/restaurant-swag.jpg" alt="Restaurant hall dressed by Guru's Decor" loading="lazy" />
+            <picture>
+              <source srcSet="/photos/restaurant-swag.webp" type="image/webp" />
+              <img src="/photos/restaurant-swag.jpg" alt="Restaurant hall dressed by Guru's Decor" loading="lazy" />
+            </picture>
           </div>
           <div>
             <div className="eyebrow rise">The Studio</div>
