@@ -40,6 +40,14 @@ const FILTERS: Array<{ id: "all" | Cat; label: string }> = [
   { id: "videos", label: "In Motion" },
 ];
 
+const dims: Record<string, [number, number]> = {
+  "beige-rod.jpg": [576, 588], "blue-satin.jpg": [720, 742], "chandelier-hall.jpg": [900, 506],
+  "gray-bedroom.jpg": [720, 1280], "gray-drapes.jpg": [576, 728], "office-blinds.jpg": [600, 800],
+  "peach-restaurant.jpg": [576, 560], "pink-living.jpg": [576, 600], "rainbow-blinds.jpg": [450, 600],
+  "restaurant-swag.jpg": [576, 440], "roller-blind.jpg": [720, 1280], "sheer-valance.jpg": [576, 740],
+  "stripe-blinds.jpg": [600, 800], "wood-blinds.jpg": [900, 1200],
+};
+
 export default function Gallery() {
   const [filter, setFilter] = useState<"all" | Cat>("all");
   const startedRef = useRef(false);
@@ -77,6 +85,7 @@ export default function Gallery() {
   }, [filter]);
 
   const items = filter === "all" ? PHOTOS : PHOTOS.filter((p) => p.cat === filter);
+
 
   return (
     <section id="gallery">
@@ -119,8 +128,18 @@ export default function Gallery() {
               ) : (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <picture>
-                  <source srcSet={p.src.replace(".jpg", ".webp")} type="image/webp" />
-                  <img src={p.src} alt={`${p.title} — ${p.sub}`} loading="lazy" />
+                  <source
+                    type="image/webp"
+                    srcSet={`${p.src.replace(".jpg", "-480.webp")} 480w, ${p.src.replace(".jpg", "-800.webp")} 800w, ${p.src.replace(".jpg", "-1200.webp")} 1200w`}
+                    sizes="(max-width: 720px) 45vw, 30vw"
+                  />
+                  <img
+                    src={p.src}
+                    alt={`${p.title} — ${p.sub}`}
+                    loading="lazy"
+                    width={dims[p.src.split("/").pop() as string]?.[0] ?? 720}
+                    height={dims[p.src.split("/").pop() as string]?.[1] ?? 900}
+                  />
                 </picture>
               )}
               <figcaption>

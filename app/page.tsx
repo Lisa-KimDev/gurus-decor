@@ -148,7 +148,11 @@ export default function Home() {
           <div className="frame">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <picture>
-              <source srcSet="/photos/blue-satin.webp" type="image/webp" />
+              <source
+                type="image/webp"
+                srcSet="/photos/blue-satin-480.webp 480w, /photos/blue-satin-800.webp 800w, /photos/blue-satin-1200.webp 1200w"
+                sizes="(max-width: 720px) 88vw, 40vw"
+              />
               <img
                 src="/photos/blue-satin.jpg"
                 alt="Blue satin curtains with tiebacks installed by Guru's Decor"
@@ -245,8 +249,18 @@ export default function Home() {
           <div className="imgbox rise">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <picture>
-              <source srcSet="/photos/restaurant-swag.webp" type="image/webp" />
-              <img src="/photos/restaurant-swag.jpg" alt="Restaurant hall dressed by Guru's Decor" loading="lazy" />
+              <source
+                type="image/webp"
+                srcSet="/photos/restaurant-swag-480.webp 480w, /photos/restaurant-swag-800.webp 800w, /photos/restaurant-swag-1200.webp 1200w"
+                sizes="(max-width: 720px) 90vw, 40vw"
+              />
+              <img
+                src="/photos/restaurant-swag.jpg"
+                alt="Restaurant hall dressed by Guru's Decor"
+                loading="lazy"
+                width={576}
+                height={440}
+              />
             </picture>
           </div>
           <div>
