@@ -145,7 +145,7 @@ export default function Home() {
                   },
                   {
                     "@type": "Question",
-                    name: "How do I get a quote from Guru's Decor?",
+                    name: "How do I get a quote?",
                     acceptedAnswer: {
                       "@type": "Answer",
                       text: "WhatsApp photos of your windows to +233 54 143 1179. We advise on fabric and send your quote the same day — measurement is free and included before any fabric is cut.",
@@ -153,7 +153,7 @@ export default function Home() {
                   },
                   {
                     "@type": "Question",
-                    name: "How long does curtain installation take?",
+                    name: "How long does installation take?",
                     acceptedAnswer: {
                       "@type": "Answer",
                       text: "Most Guru's Decor installations are completed in a single fitting visit after on-site measurement — supply, installation and styling are handled by our own team.",
@@ -169,7 +169,7 @@ export default function Home() {
                   },
                   {
                     "@type": "Question",
-                    name: "What areas does Guru's Decor serve?",
+                    name: "What areas do you serve?",
                     acceptedAnswer: {
                       "@type": "Answer",
                       text: "Guru's Decor is based in Accra and serves the whole of Ghana — homes, offices and restaurants. Opening hours are Monday to Saturday, 8am–6pm.",
