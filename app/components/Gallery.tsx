@@ -126,7 +126,7 @@ export default function Gallery() {
                   <track kind="captions" label="No dialogue" src={p.captions} default />
                 </video>
               ) : (
-                /* eslint-disable-next-line @next/next/no-img-element */
+                 
                 <picture>
                   <source
                     type="image/webp"

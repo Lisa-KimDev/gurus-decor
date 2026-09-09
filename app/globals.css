@@ -3,7 +3,8 @@
   --cream-2: #efe6d6;
   --ink: #2b211a;
   --ink-soft: #5c4c3e;
-  --gold: #b9863c;
+  --gold: #a1742f;
+  --gold-bright: #b9863c;
   --gold-soft: #d9b577;
   --line: rgba(185, 134, 60, 0.28);
 }
@@ -115,7 +116,7 @@ header.hero p.lede { margin: 22px 0 34px; font-size: 1.06rem; color: var(--ink-s
   font-family: var(--font-display), serif; font-style: italic;
   font-size: 1.05rem; color: var(--ink-soft); letter-spacing: 0.04em;
 }
-.strip i { color: var(--gold); font-style: normal; }
+.strip i { color: var(--gold-bright); font-style: normal; }
 @keyframes slide { to { transform: translateX(-50%); } }
 
 /* ── sections ── */
@@ -173,7 +174,7 @@ section { padding: 96px 0; }
   padding: 34px 28px; transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 .svc:hover { transform: translateY(-6px); box-shadow: 0 26px 48px -24px rgba(43, 33, 26, 0.35); }
-.svc .n { font-family: var(--font-display), serif; font-style: italic; color: var(--gold-soft); font-size: 1rem; }
+.svc .n { font-family: var(--font-display), serif; font-style: italic; color: var(--gold); font-size: 1rem; }
 .svc h3 { font-family: var(--font-display), serif; font-size: 1.45rem; font-weight: 600; margin: 8px 0 10px; }
 .svc p { color: var(--ink-soft); font-size: 0.94rem; line-height: 1.65; }
 @media (max-width: 860px) { .svc-grid { grid-template-columns: 1fr 1fr; } }
@@ -283,7 +284,7 @@ header.hero .badge { animation: badgeIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) 1s 
 .sec-head h2 { position: relative; display: inline-block; }
 .sec-head h2::after {
   content: ""; position: absolute; left: 0; bottom: -10px;
-  height: 2px; width: 64px; background: var(--gold);
+  height: 2px; width: 64px; background: var(--gold-bright);
   transform-origin: left; transform: scaleX(0);
   transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
 }
@@ -442,6 +443,6 @@ header.hero .badge { animation: badgeIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) 1s 
 .faq-item[open] { border-color: var(--gold); }
 .faq-item summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: var(--font-body); font-weight: 500; font-size: 1.02rem; color: var(--ink); }
 .faq-item summary::-webkit-details-marker { display: none; }
-.faq-item summary span { color: var(--gold); font-size: 1.4rem; line-height: 1; transition: transform .25s ease; flex: 0 0 auto; }
+.faq-item summary span { color: var(--gold-bright); font-size: 1.4rem; line-height: 1; transition: transform .25s ease; flex: 0 0 auto; }
 .faq-item[open] summary span { transform: rotate(45deg); }
 .faq-item p { margin: 14px 0 0; font-size: 0.95rem; line-height: 1.65; color: var(--ink-soft); }

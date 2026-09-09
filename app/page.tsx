@@ -1,5 +1,6 @@
-import Intro from "./components/Intro";
 import Gallery from "./components/Gallery";
+import { buildSchema } from "./lib/schema";
+import { FAQS } from "./data/faqs";
 
 const WA = "233541431179";
 const waLink = (msg: string) =>
@@ -10,107 +11,7 @@ export default function Home() {
     <main>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@graph": [
-              {
-                "@type": "LocalBusiness",
-                "@id": "https://www.gurusdecorgh.com/#org",
-                name: "Guru's Decor",
-                description:
-                  "Family-run window-fashion studio supplying and installing curtains, blinds, rods and tracks across Ghana since 2016.",
-                url: "https://www.gurusdecorgh.com/",
-                telephone: "+233541431179",
-                foundingDate: "2016",
-                priceRange: "GH₵250 - GH₵300+",
-                image: "https://www.gurusdecorgh.com/photos/blue-satin.jpg",
-                address: {
-                  "@type": "PostalAddress",
-                  addressLocality: "Accra",
-                  addressCountry: "GH",
-                },
-                areaServed: { "@type": "Country", name: "Ghana" },
-                openingHoursSpecification: {
-                  "@type": "OpeningHoursSpecification",
-                  dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                  opens: "08:00",
-                  closes: "18:00",
-                },
-                knowsAbout: ["Curtains", "Blinds", "Window blinds", "Drapery", "Interior design", "Window treatment"],
-              },
-              {
-                "@type": "WebSite",
-                "@id": "https://www.gurusdecorgh.com/#site",
-                url: "https://www.gurusdecorgh.com/",
-                name: "Guru's Decor",
-                publisher: { "@id": "https://www.gurusdecorgh.com/#org" },
-              },
-              {
-                "@type": "WebPage",
-                "@id": "https://www.gurusdecorgh.com/#webpage",
-                url: "https://www.gurusdecorgh.com/",
-                name: "Curtains, Blinds & Window Fashion in Ghana | Guru's Decor Accra",
-                isPartOf: { "@id": "https://www.gurusdecorgh.com/#site" },
-                about: { "@id": "https://www.gurusdecorgh.com/#org" },
-              },
-              {
-                "@type": "FAQPage",
-                "@id": "https://www.gurusdecorgh.com/#faq",
-                mainEntity: [
-                  {
-                    "@type": "Question",
-                    name: "How much do curtains cost in Ghana?",
-                    acceptedAnswer: {
-                      "@type": "Answer",
-                      text: "At Guru's Decor, ready-made curtain pairs start from GH₵250, and custom drapery typically runs GH₵250–GH₵300+ per pair depending on fabric and size. Send a photo of your windows on WhatsApp for a free same-day quote.",
-                    },
-                  },
-                  {
-                    "@type": "Question",
-                    name: "Do you deliver and install outside Accra?",
-                    acceptedAnswer: {
-                      "@type": "Answer",
-                      text: "Yes — Guru's Decor serves clients nationwide across Ghana. Based in Accra, we travel for homes, offices and restaurant projects across the country.",
-                    },
-                  },
-                  {
-                    "@type": "Question",
-                    name: "How do I get a quote?",
-                    acceptedAnswer: {
-                      "@type": "Answer",
-                      text: "WhatsApp photos of your windows to +233 54 143 1179. We advise on fabric and send your quote the same day — measurement is free and included before any fabric is cut.",
-                    },
-                  },
-                  {
-                    "@type": "Question",
-                    name: "How long does installation take?",
-                    acceptedAnswer: {
-                      "@type": "Answer",
-                      text: "Most Guru's Decor installations are completed in a single fitting visit after on-site measurement — supply, installation and styling are handled by our own team.",
-                    },
-                  },
-                  {
-                    "@type": "Question",
-                    name: "Do you dress offices and restaurants?",
-                    acceptedAnswer: {
-                      "@type": "Answer",
-                      text: "Yes. Guru's Decor handles bulk and contract dressing for offices, hotels and dining halls across Ghana — on schedule and on budget, from rods and tracks to full swag styling.",
-                    },
-                  },
-                  {
-                    "@type": "Question",
-                    name: "What areas do you serve?",
-                    acceptedAnswer: {
-                      "@type": "Answer",
-                      text: "Guru's Decor is based in Accra and serves the whole of Ghana — homes, offices and restaurants. Opening hours are Monday to Saturday, 8am–6pm.",
-                    },
-                  },
-                ],
-              },
-            ],
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildSchema()) }}
       />
       <nav>
         <div className="logo">
@@ -146,7 +47,6 @@ export default function Home() {
         </div>
         <div className="hero-art rise" style={{ transitionDelay: "240ms" }}>
           <div className="frame">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <picture>
               <source
                 type="image/webp"
@@ -247,7 +147,6 @@ export default function Home() {
       <section id="about">
         <div className="wrap about">
           <div className="imgbox rise">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <picture>
               <source
                 type="image/webp"
@@ -294,26 +193,13 @@ export default function Home() {
             <h2 className="display">Questions, answered.</h2>
           </div>
           <div className="faq-list rise">
-            {[
-              ["How much do curtains cost in Ghana?",
-               "Ready-made curtain pairs start from GH₵250, and custom drapery typically runs GH₵250–GH₵300+ per pair depending on fabric and size. Send a photo of your windows on WhatsApp for a free same-day quote."],
-              ["Do you deliver and install outside Accra?",
-               "Yes — we serve clients nationwide across Ghana. Based in Accra, we travel for homes, offices and restaurant projects across the country."],
-              ["How do I get a quote?",
-               "WhatsApp photos of your windows to +233 54 143 1179. We advise on fabric and send your quote the same day — measurement is free and included before any fabric is cut."],
-              ["How long does installation take?",
-               "Most installations are completed in a single fitting visit after on-site measurement — supply, installation and styling are handled by our own team."],
-              ["Do you dress offices and restaurants?",
-               "Yes. We handle bulk and contract dressing for offices, hotels and dining halls across Ghana — on schedule and on budget, from rods and tracks to full swag styling."],
-              ["What areas do you serve?",
-               "We're based in Accra and serve the whole of Ghana. Opening hours are Monday to Saturday, 8am–6pm."],
-            ].map(([q, a]) => (
-              <details key={q} className="faq-item">
+            {FAQS.map((f) => (
+              <details key={f.q} className="faq-item">
                 <summary>
-                  {q}
+                  {f.q}
                   <span aria-hidden>+</span>
                 </summary>
-                <p>{a}</p>
+                <p>{f.a}</p>
               </details>
             ))}
           </div>

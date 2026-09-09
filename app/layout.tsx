@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import Intro from "./components/Intro";
-import Gallery from "./components/Gallery";
 import "./globals.css";
 
 const display = Cormorant_Garamond({
