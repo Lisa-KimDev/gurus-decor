@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Jost } from "next/font/google";
+import Intro from "./components/Intro";
+import Gallery from "./components/Gallery";
 import "./globals.css";
 
 const display = Cormorant_Garamond({
@@ -48,12 +50,16 @@ export const metadata: Metadata = {
     images: ["/og-card.jpg"],
   },
   robots: { index: true, follow: true },
+  icons: { icon: "/icon.svg", apple: "/icon.svg" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Intro />
+        {children}
+      </body>
     </html>
   );
 }

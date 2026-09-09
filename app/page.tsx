@@ -1,81 +1,11 @@
-"use client";
-import { useEffect, useRef, useState } from "react";
+import Intro from "./components/Intro";
+import Gallery from "./components/Gallery";
 
 const WA = "233541431179";
 const waLink = (msg: string) =>
   `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
 
-type Cat = "curtains" | "blinds" | "videos";
-type Item = {
-  src: string;
-  title: string;
-  sub: string;
-  cat: Cat;
-  cls?: string;
-  video?: boolean;
-  poster?: string;
-  captions?: string;
-};
-const PHOTOS: Item[] = [
-  { src: "/photos/pink-living.jpg", title: "The Pink Lounge", sub: "Layered drapes & valance — residential", cat: "curtains", cls: "tall" },
-  { src: "/photos/blue-satin.jpg", title: "Blue Satin Duo", sub: "Tieback styling — residential", cat: "curtains", cls: "tall" },
-  { src: "/photos/chandelier-hall.jpg", title: "The Chandelier Hall", sub: "Sheers under camel drapes — showpiece", cat: "curtains", cls: "wide" },
-  { src: "/photos/gray-bedroom.jpg", title: "Grey Retreat", sub: "Blackout drapes & sheer — bedroom", cat: "curtains", cls: "tall" },
-  { src: "/photos/peach-restaurant.jpg", title: "Peach Dining Hall", sub: "Full hall dressing — restaurant", cat: "curtains", cls: "wide" },
-  { src: "/photos/gray-drapes.jpg", title: "Grey & Sheer", sub: "Double-layer drape — residential", cat: "curtains", cls: "tall" },
-  { src: "/photos/restaurant-swag.jpg", title: "Swagged Bay", sub: "Swag valance — restaurant", cat: "curtains", cls: "wide" },
-  { src: "/photos/beige-rod.jpg", title: "Beige Classic", sub: "Rod set & sheers — residential", cat: "curtains" },
-  { src: "/photos/sheer-valance.jpg", title: "Sheer Romance", sub: "Valance & sheer — residential", cat: "curtains", cls: "tall" },
-  { src: "/photos/wood-blinds.jpg", title: "Walnut Woods", sub: "Timber venetians — residential", cat: "blinds", cls: "tall" },
-  { src: "/photos/stripe-blinds.jpg", title: "Monochrome Stripe", sub: "Zebra blinds — office", cat: "blinds", cls: "tall" },
-  { src: "/photos/rainbow-blinds.jpg", title: "The Rainbow Kitchen", sub: "Colour-run slats — kitchen", cat: "blinds" },
-  { src: "/photos/office-blinds.jpg", title: "The Study", sub: "Faux-wood blinds — office", cat: "blinds", cls: "tall" },
-  { src: "/photos/roller-blind.jpg", title: "Taupe Roller", sub: "Roller blind — residential", cat: "blinds", cls: "tall" },
-  { src: "/photos/media/video-blue-duo-cap.mp4", poster: "/photos/media/poster-blue-duo.jpg", captions: "/photos/media/cap.vtt", title: "Blue Satin Duo — The Film", sub: "Motion walkthrough — residential", cat: "videos", cls: "tall", video: true },
-  { src: "/photos/media/video-teal-tieback-cap.mp4", poster: "/photos/media/poster-teal-tieback.jpg", captions: "/photos/media/cap.vtt", title: "Teal Tiebacks in Motion", sub: "Sheer + drape layers — residential", cat: "videos", cls: "tall", video: true },
-];
-
 export default function Home() {
-  const [filter, setFilter] = useState<"all" | Cat>("all");
-  const [introDone, setIntroDone] = useState(false);
-  const [introGone, setIntroGone] = useState(false);
-  const ioRef = useRef<IntersectionObserver | null>(null);
-
-  useEffect(() => {
-    const seen = sessionStorage.getItem("gd-intro");
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (seen || reduced) {
-      setIntroDone(true);
-      setIntroGone(true);
-      return;
-    }
-    const t1 = setTimeout(() => sessionStorage.setItem("gd-intro", "1"), 500);
-    const t2 = setTimeout(() => setIntroDone(true), 2900);
-    const t3 = setTimeout(() => setIntroGone(true), 3500);
-    return () => [t1, t2, t3].forEach(clearTimeout);
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = introDone || introGone ? "" : "hidden";
-  }, [introDone, introGone]);
-
-  const skip = () => {
-    sessionStorage.setItem("gd-intro", "1");
-    setIntroDone(true);
-    setIntroGone(true);
-  };
-
-  useEffect(() => {
-    if (!introDone) return;
-    const io = new IntersectionObserver(
-      (es) => es.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
-      { threshold: 0.12 }
-    );
-    document.querySelectorAll(".rise:not(.in)").forEach((el) => io.observe(el));
-    ioRef.current = io;
-    return () => io.disconnect();
-  }, [filter, introDone]);
-
   return (
     <main>
       <script
@@ -182,39 +112,6 @@ export default function Home() {
           }),
         }}
       />
-      {!introGone && (
-        <div className={`intro ${introDone ? "out" : ""}`} aria-hidden={introDone}>
-          <div className="intro-stage">
-            <div className="intro-brand">
-              <div className="intro-wreath" aria-hidden>
-                <svg viewBox="0 0 100 100" width="92" height="92">
-                  <g fill="none" stroke="#d9b577" strokeWidth="1.6">
-                    <path d="M50 50 C42 34 42 20 50 8 C58 20 58 34 50 50Z" />
-                    <path d="M50 50 C58 34 58 20 50 8" opacity="0.5" />
-                    <path d="M50 50 C34 42 20 42 8 50 C20 58 34 58 50 50Z" />
-                    <path d="M50 50 C34 58 20 58 8 50" opacity="0.5" />
-                    <path d="M50 50 C42 66 42 80 50 92 C58 80 58 66 50 50Z" />
-                    <path d="M50 50 C58 66 58 80 50 92" opacity="0.5" />
-                    <path d="M50 50 C66 42 80 42 92 50 C80 58 66 58 50 50Z" />
-                    <path d="M50 50 C66 58 80 58 92 50" opacity="0.5" />
-                  </g>
-                  <circle cx="50" cy="50" r="14" fill="none" stroke="#d9b577" strokeWidth="1.2" />
-                </svg>
-              </div>
-              <div className="intro-name display">
-                Guru&rsquo;s <em>Decor</em>
-              </div>
-              <div className="intro-tag">Window fashion · Ghana</div>
-            </div>
-          </div>
-          <div className="curtain left" aria-hidden />
-          <div className="curtain right" aria-hidden />
-          <div className="curtain valance" aria-hidden />
-          <button className="intro-skip" onClick={skip} tabIndex={introDone ? -1 : 0}>
-            Skip intro
-          </button>
-        </div>
-      )}
       <nav>
         <div className="logo">
           Guru&rsquo;s <em>Decor</em>
@@ -244,7 +141,7 @@ export default function Home() {
             <a className="btn gold" href={waLink("Hello Guru's Decor! I'd like a quote for my windows.")}>
               Get a Free Quote
             </a>
-            <a className="btn ghost" href="#gallery">View Our Work</a>
+            <a className="btn ghost" href="#gallery">See Our Work</a>
           </div>
         </div>
         <div className="hero-art rise" style={{ transitionDelay: "240ms" }}>
@@ -261,83 +158,14 @@ export default function Home() {
               />
             </picture>
           </div>
- <div className="badge">
+          <div className="badge">
             <b>GH₵250+</b>
-            ready-made pairs, supplied &amp; installed
+            <span>ready-made pairs</span>
           </div>
         </div>
       </header>
 
-      <div className="strip" aria-hidden>
-        <div className="track">
-          {[...Array(2)].map((_, k) => (
-            <span key={k} style={{ display: "inline-flex", gap: 56 }}>
-              <span>Curtains <i>✦</i></span><span>Blinds <i>✦</i></span><span>Rods &amp; Tracks <i>✦</i></span>
-              <span>Office &amp; Restaurant Dressing <i>✦</i></span><span>Free Measurement <i>✦</i></span>
-              <span>Home Delivery <i>✦</i></span>
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <section id="gallery">
-        <div className="wrap">
-          <div className="sec-head rise">
-            <div className="eyebrow">The Portfolio</div>
-            <h2 className="display">A decade at the window.</h2>
-            <p>
-              Real installations from the Guru&rsquo;s Decor book — living
-              rooms, bedrooms and dining halls we&rsquo;ve dressed since 2016.
-              Every photo and film, our own work.
-            </p>
-          </div>
-          <div className="chips rise" role="tablist" aria-label="Filter gallery">
-            {(["all", "curtains", "blinds", "videos"] as const).map((c) => (
-              <button
-                key={c}
-                className={`chip ${filter === c ? "on" : ""}`}
-                onClick={() => setFilter(c)}
-                role="tab"
-                aria-selected={filter === c}
-              >
-                {c === "all" ? "All Work" : c === "curtains" ? "Curtains" : c === "blinds" ? "Blinds" : "Videos"}
-              </button>
-            ))}
-          </div>
-          <div className="gallery">
-            {PHOTOS.filter((p) => filter === "all" || p.cat === filter).map((p, i) => (
-              <figure
-                key={p.src}
-                className={`gcard rise ${p.cls || ""}`}
-                style={{ transitionDelay: `${(i % 3) * 90}ms` }}
-              >
-                {p.video ? (
-                  <video
-                    src={p.src}
-                    poster={p.poster}
-                    controls
-                    playsInline
-                    preload="none"
-                    aria-label={`${p.title} — ${p.sub}`}
-                  >
-                    <track kind="captions" label="No dialogue" src={p.captions} default />
-                  </video>
-                ) : (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <picture>
-                    <source srcSet={p.src.replace(".jpg", ".webp")} type="image/webp" />
-                    <img src={p.src} alt={`${p.title} — ${p.sub}`} loading="lazy" />
-                  </picture>
-                )}
-                <figcaption className="cap">
-                  <b>{p.title}</b>
-                  {p.sub}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Gallery />
 
       <section id="services" style={{ background: "var(--cream-2)" }}>
         <div className="wrap">
@@ -388,7 +216,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-   </section>
+      </section>
 
       <section id="process">
         <div className="wrap">
