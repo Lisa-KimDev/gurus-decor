@@ -15,10 +15,39 @@ const body = Jost({
   variable: "--font-body",
 });
 
+const SITE_URL = "https://gurusdecorgh.com";
+const TITLE = "Curtains, Blinds & Window Fashion in Ghana | Guru's Decor Accra";
+const DESCRIPTION =
+  "Guru's Decor supplies and installs curtains, blinds, rods and tracks across Ghana — homes, offices and restaurants. Ready-made pairs from GH₵250, free measurement, same-day WhatsApp quotes. Est. 2016.";
+
 export const metadata: Metadata = {
-  title: "Guru's Decor — Curtains, Blinds & Window Fashion in Ghana",
-  description:
-    "Supply and installation of curtains, blinds, rods and tracks for homes, offices and restaurants across Ghana. Ready-made pairs from GH₵250. WhatsApp us today.",
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: "Guru's Decor",
+    title: TITLE,
+    description: DESCRIPTION,
+    locale: "en_GH",
+    images: [
+      {
+        url: "/og-card.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Guru's Decor — curtains and blinds installed across Ghana. Windows that wear couture.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ["/og-card.jpg"],
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
